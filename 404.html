@@ -14,9 +14,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0a0f;
 @keyframes spin{to{transform:rotate(360deg)}}
 h1{margin-bottom:.5rem;font-size:1.25rem;font-weight:500}
 p{color:#888;font-size:.875rem;line-height:1.5}
-.fallback{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
-.fallback a{color:#bb86fc;text-decoration:none;font-size:.8125rem}
-.fallback a:hover{text-decoration:underline}
+.btn{margin-top:1.5rem;display:inline-block;padding:.75rem 2rem;border:1px solid rgba(187,134,252,.3);border-radius:12px;color:#bb86fc;text-decoration:none;font-size:.875rem;transition:background .2s}
+.btn:hover{background:rgba(187,134,252,.1)}
 </style>
 </head>
 <body>
@@ -24,19 +23,29 @@ p{color:#888;font-size:.875rem;line-height:1.5}
 <div class="face">-_-</div>
 <div class="spinner"></div>
 <h1>Opening Emotion Link</h1>
-<p>Redirecting to your companion...</p>
-<div class="fallback">
-<a href="#" onclick="return false" id="manual">emotion://connect/<span id="token"></span></a>
-</div>
+<p>Tap the button if it doesn't open automatically</p>
+<a class="btn" href="#" id="openBtn">Open Emotion Link</a>
 </div>
 <script>
 var path = window.location.pathname;
 var match = path.match(/\/connect\/(.+)/);
 if (match) {
-  document.getElementById('token').textContent = match[1];
-  document.getElementById('manual').href = 'emotion://connect/' + match[1];
-  document.getElementById('manual').onclick = null;
-  window.location.href = 'emotion://connect/' + match[1];
+  var uri = 'emotion://connect/' + encodeURIComponent(match[1]);
+  var btn = document.getElementById('openBtn');
+  btn.href = uri;
+  btn.onclick = null;
+  // iframe method for better compatibility
+  var iframe = document.createElement('iframe');
+  iframe.src = uri;
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+  // location redirect fallback
+  window.location.href = uri;
+  // meta refresh backup
+  var meta = document.createElement('meta');
+  meta.httpEquiv = 'refresh';
+  meta.content = '0; url=' + uri;
+  document.head.appendChild(meta);
 }
 </script>
 </body>
