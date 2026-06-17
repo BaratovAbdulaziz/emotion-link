@@ -6,7 +6,12 @@
 var path = window.location.pathname;
 var match = path.match(/\/connect\/(.+)/);
 if (match) {
-  window.location.href = 'emotion://connect/' + match[1];
+  var uri = 'emotion://connect/' + encodeURIComponent(match[1]);
+  var iframe = document.createElement('iframe');
+  iframe.src = uri;
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+  window.location.href = uri;
 }
 </script>
 </body>
