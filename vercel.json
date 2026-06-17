@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/connect/:token",
+      "destination": "emotion://connect/:token",
+      "type": "permanent"
+    }
+  ]
+}

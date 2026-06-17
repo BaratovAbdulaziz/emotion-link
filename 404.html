@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Emotion Link</title></head>
+<body>
+<script>
+var path = window.location.pathname;
+var match = path.match(/\/connect\/(.+)/);
+if (match) {
+  window.location.href = 'emotion://connect/' + match[1];
+}
+</script>
+</body>
+</html>
